@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 0.15rem;
+}
+
+button {
+    cursor: pointer;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+}
+
+header > *, main > * {
+    margin: 3vh 8vw;
+}
+
+header {
+    background: #0ea5e9;
+    color: white;
+    display: grid;
+    align-items: center;
+    font-weight: 500;
+}
+
+main {
+    background: #075985;
+    display: grid;
+}
+
+form, form > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    background: white;
+    gap: 2vh;
+    width: 15vw;
+    height: 45vh;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+form > div {
+    gap: 0.5vh;
+}
+
+form > div > input {
+    height: 3vh;
+    width: auto;
+    letter-spacing: 0.1rem;
+    padding: 0 0.5vw;
+    border-radius: 0.5rem;
+}
+
+form > div:last-of-type {
+    flex-direction: row;
+    gap: 1vw;
+}
+
+main > button {
+    position: absolute;
+    border-radius: 100%;
+    border-color: transparent;
+    top: 85%;
+    left: 85%;
+    color: white;
+    background: #0ea5e9;
+    font-size: 4vh;
+    font-weight: 300;
+    height: 6vh;
+    width: 6vh;
+    transition: rotate 0.5s, background-color 0.5s;
+}
+
+input[value='Submit'] {
+    height: 4vh;
+    width: 5vw;
+    border-radius: 1rem;
+    border: transparent;
+    background: #0ea5e9;
+    color: white;
+    font-size: 1.7vh;
+    font-weight: 500;
+}
+
+input[value='Submit']:hover {
+    background: #037eb8;
+}
+
+input[value='Submit']:active {
+    background: #075985;
+}
+
+.books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15vw, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(18vh, 1fr));
+    gap: 5vh;
+}
+
+.books > div {
+    background: linear-gradient(45deg, #16A085, #F4D03F);
+    padding: 2vh 2vh;
+    font-size: 2vh;
+    color: white;
+}
+
+.books > div > input {
+    margin-top: 3vh;
+}
+
+.books > div > button {
+    margin-top: 2vh;
+}
+
+.books > div > div:last-of-type {
+    margin-top: 1vh;
+}
