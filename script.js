@@ -1,6 +1,7 @@
 const open = document.getElementById('open'),
       form = document.querySelector('form'),
-      books = [];
+      erase = document.querySelectorAll('.erase'),
+      booksArr = [];
 
 open.addEventListener('click', () => {
 
@@ -24,8 +25,8 @@ form.addEventListener('submit', evento => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
-    data.indexValue = books.length;
-    books.push(data);
+    data.indexValue = booksArr.length;
+    booksArr.push(data);
 
     (() => {
         let clear = document.querySelectorAll('input');
@@ -34,28 +35,52 @@ form.addEventListener('submit', evento => {
             input.value = '';
         })
     })();
+    
+    addBook(booksArr);
+})
 
-    addBook(books);
+erase.forEach(button => {
+    button.addEventListener('click', () => {
+        let arrIndex = Number(button.dataset.index);
+
+                
+    })
 })
 
 function addBook (array) {
     let bookIndex = array[array.length -1],
-        books = document.querySelector('.books'),
+        booksDiv = document.querySelector('.books'),
         book = document.createElement('div'),
+        label = document.createElement('label'),
+        input = document.createElement('input'),
+        eraseButton = document.createElement('button'),
         myDivs = [];
 
     book.className = 'book';
-    document.books.appendChild(book);
+    booksDiv.appendChild(book);
     
     for(let i = 0; i < 4; i++){
         let div = document.createElement('div');
 
-        
+        myDivs.push(div);
+        book.appendChild(myDivs[i]);        
     }
-}
 
-function erasePage () {
-    const erase = document.getElementsByClassName('btn-danger');
-
-
+    book.appendChild(eraseButton);
+    eraseButton.className = 'btn btn-danger erase';
+    eraseButton.dataset.index = array.length-1;
+    eraseButton.innerText = 'Erase';
+    myDivs[0].innerText = `Title: ${bookIndex.title}`;
+    myDivs[1].innerText = `Author: ${bookIndex.author}`;
+    myDivs[2].innerText = `Pages ${bookIndex.pages}`;
+    myDivs[3].className = "form-check form-switch";
+    myDivs[3].appendChild(label);
+    myDivs[3].appendChild(input);
+    label.className = "form-check-label"
+    label.innerText = 'Read';
+    input.className = 'form-check-input';
+    input.type = 'checkbox';
+    input.role = 'switch';
+    input.name = 'check';
+    if(bookIndex.read) {input.checked = true}
 }
