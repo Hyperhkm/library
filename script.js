@@ -1,6 +1,6 @@
 const open = document.getElementById('open'),
       form = document.querySelector('form'),
-      erase = document.querySelectorAll('.erase'),
+      booksDiv = document.querySelector('.books'),
       booksArr = [];
 
 open.addEventListener('click', () => {
@@ -24,8 +24,8 @@ form.addEventListener('submit', evento => {
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
+    let booksChilds = document.querySelectorAll('.book');
 
-    data.indexValue = booksArr.length;
     booksArr.push(data);
 
     (() => {
@@ -36,21 +36,13 @@ form.addEventListener('submit', evento => {
         })
     })();
     
-    addBook(booksArr);
+    removeAllNodes(booksChilds);
+    iterateBooks(booksArr);
+    eraseDivs(booksArr);
 })
 
-erase.forEach(button => {
-    button.addEventListener('click', () => {
-        let arrIndex = Number(button.dataset.index);
-
-                
-    })
-})
-
-function addBook (array) {
-    let bookIndex = array[array.length -1],
-        booksDiv = document.querySelector('.books'),
-        book = document.createElement('div'),
+function addBook (currentIndex) {
+    let book = document.createElement('div'),
         label = document.createElement('label'),
         input = document.createElement('input'),
         eraseButton = document.createElement('button'),
@@ -68,11 +60,11 @@ function addBook (array) {
 
     book.appendChild(eraseButton);
     eraseButton.className = 'btn btn-danger erase';
-    eraseButton.dataset.index = array.length-1;
     eraseButton.innerText = 'Erase';
-    myDivs[0].innerText = `Title: ${bookIndex.title}`;
-    myDivs[1].innerText = `Author: ${bookIndex.author}`;
-    myDivs[2].innerText = `Pages ${bookIndex.pages}`;
+    eraseButton.dataset.index = currentIndex.index;
+    myDivs[0].innerText = `Title: ${currentIndex.title}`;
+    myDivs[1].innerText = `Author: ${currentIndex.author}`;
+    myDivs[2].innerText = `Pages ${currentIndex.pages}`;
     myDivs[3].className = "form-check form-switch";
     myDivs[3].appendChild(label);
     myDivs[3].appendChild(input);
@@ -82,5 +74,34 @@ function addBook (array) {
     input.type = 'checkbox';
     input.role = 'switch';
     input.name = 'check';
-    if(bookIndex.read) {input.checked = true}
+    if(currentIndex.read) {input.checked = true}
+}
+
+function removeAllNodes (array) {
+    array.forEach(book => {
+        while(book.firstChild) {
+            book.removeChild(book.firstChild);
+        }
+        book.remove();
+    })
+}
+
+function iterateBooks (array) {
+    array.forEach((book, index) => {
+        book.index = index;
+        addBook(book);
+    });
+}
+
+function eraseDivs (array) {
+    let erase = document.querySelectorAll('.erase');
+    erase.forEach(button => {
+        button.addEventListener('click', function () {
+            let booksChilds = document.querySelectorAll('.book');
+            array.splice(button.dataset.index, 1);
+            removeAllNodes(booksChilds);
+            iterateBooks(array);
+            eraseDivs(array);
+        })
+    })
 }
